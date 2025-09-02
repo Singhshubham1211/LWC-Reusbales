@@ -1,0 +1,199 @@
+@font-face {
+    font-family: 'custom_poppins';
+    src: url('@salesforce/resourceUrl/Poppins_Font');
+  }
+
+  .custom-icon-blue {
+    --lwc-colorTextIconDefault: #0C5B8C;
+  }
+ 
+body {
+    font-family: 'custom_poppins' !important;
+}
+.custom-tabset-wrapper {
+    background: linear-gradient(135deg, #0C5B8C 0%, #094a75 100%);
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    
+}
+.custom-tabset-wrapper-class{
+    background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+    
+}
+.upperSection {
+    background-color: #CCCCCC;
+    margin: -1px 1rem 0 1rem;    /* snug under the tab bar */
+    border-radius: 6px;          /* smaller curve on all corners */
+    padding: 1rem;
+}
+.custom-tabset-wrapper lightning-tabset {
+    --slds-c-tabs-color-background: transparent;
+    --slds-c-tabs-color-border: transparent;
+    --slds-c-tabs-item-color-background: #0C5B8C;
+    --slds-c-tabs-item-color-background-hover: #094a75;
+    --slds-c-tabs-item-color-background-active: #4A9FDB;
+    --slds-c-tabs-item-text-color: white;
+    --slds-c-tabs-item-text-color-hover: white;
+    --slds-c-tabs-item-text-color-active: white;
+    --slds-c-tabs-item-font-size: 16px;
+    --slds-c-tabs-item-font-weight: 600;
+    --slds-c-tabs-item-font-weight-active: 700;
+}
+/* Make only the active tab blue */
+/* .slds-tabs_default__item.slds-is-active {
+    background: linear-gradient(135deg, #0C5B8C 0%, #094a75 100%);
+    color: red !important;
+    border-radius: 4px 4px 0 0;
+}
+
+/* Optional: inactive tabs look normal */
+/* .slds-tabs_default__item:not(.slds-is-active) {
+    background: #f4f6f9;
+    color: #333;
+} */ 
+.custom-no-data-message {
+    background-color: #c23934; /* Salesforce SLDS error red */
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    font-weight: bold;
+}
+
+.highlighted-row {
+    background-color: #F4F8FC;
+}
+
+.slds-table{
+	width: 100%;
+    table-layout: auto;
+	column-width: 200px;
+    margin-left: 0px; 
+    padding: 2px;
+    min-width: 1500px;
+}
+/* .slds-table{
+	width: 100%;
+    table-layout: fixed; 
+	column-width: auto;
+    margin-left: 0px; 
+    padding: 2px;
+} */
+
+.slds-table th {
+    position: sticky; 
+	background-color: #0C5B8C;
+    color: white;
+    text-align: left;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    background: #0C5B8C; 
+    z-index: 1;
+  }
+
+.slds-table tr{
+    height: 30px;
+}
+
+.slds-th__action:hover {
+    color: #0C5B8C;
+}
+
+.slds-button_icon-right {
+    position: absolute;
+    right: 0rem; 
+    padding-right: 2%;
+}
+.wide-col {
+    min-width: 200px;   /* keeps it wide */
+    max-width: 300px;   /* optional cap */
+}
+
+.filter-row{
+    background-color: #0C5B8C;
+}
+
+.filter-input{
+    width: 80%;
+}
+
+.custom-header-width {
+    width: 3px;
+}
+
+.section {
+    background-color: #cccccc;
+    border-radius: 4px;
+    padding: 8px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    height: 35px;
+}
+
+.mouse-pointer:hover{
+    cursor: pointer;
+}
+
+*{
+    --lwc-spacingLarge: .5rem;
+}
+
+/* start : Mobile Fix */
+@media only screen and (max-width: 480px) {
+    .slds-col {
+        width: 100% !important;
+    }
+    .mobileHeight{
+        height: 100px;
+    }
+    @supports (-webkit-touch-callout: none) {
+
+        /* CSS specific to iOS devices */
+        /*.invDateInput input {
+            width:200px;
+            border: 1px solid red;
+          }*/
+        .slds-form-element__control {
+            background-color: gray;
+        }
+    }
+
+    .scrollable-div {}
+
+    .invoiceTableMainContainer {
+        overflow: hidden;
+        overflow-x: visible;
+    }
+
+    .invoiceTableContainer {
+        width: 1000px;
+    }
+
+    .childRecordsMainTableContainer {
+        overflow: hidden;
+        overflow-x: visible;
+    }
+
+    .childRecordsTableContainer {
+        width: 1000px;
+    }
+    .section {
+        height: 65px; /* Adjust the height as needed for mobile devices */
+        font-size: 12px; /* Adjust the font size as needed for mobile devices */
+    }
+     .invoice-details h5 {
+        font-size: 12px; /* Adjust the font size as needed for mobile devices */
+        white-space: normal; /* Allow text to wrap */
+    }
+}
+/* end : Mobile Fix */
+
+.text-bold{
+    font-weight: bold;
+}

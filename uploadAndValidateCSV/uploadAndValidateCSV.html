@@ -1,0 +1,102 @@
+<template>
+    
+    <div >
+        <!-- <span><lightning-button label="Download Template" onclick={downloadTemplate} ></lightning-button></span> -->
+        <span><lightning-button label="Upload Products" variant="brand"  onclick={uploadTemplate} ></lightning-button></span>
+    </div>
+
+    <template lwc:if={uploadProduct}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <b><h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+                        Upload Product
+                    </h1></b>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <b><lightning-input type="file" label="Upload Product" accept=".csv" onchange={handleProductUpload}>
+                    </lightning-input></b>
+                    <div>
+                        <span class="preview" data-id={ProductContentVersionId}>
+                            {ProductLstDocName}
+                        </span>
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" aria-label="Cancel and close"
+                    onclick={handleCancelProduct}>
+                        Cancel
+                    </button>
+                    <button class="slds-button slds-button_brand" onclick={readProduct}>
+                        Validate
+                    </button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+
+    <template lwc:if={openProductViewModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-03"
+        class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <b><h1 id="modal-heading-03" class="slds-modal__title slds-hyphenate">
+                        Product Preview
+                    </h1></b>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+                    <div class="slds-var-m-around_medium">
+                        <div>
+                            <p class="slds-text-heading_small slds-text-color_success">
+                                Valid products: {passCount}
+                            </p>
+                        </div>
+                        <div>
+                            <p class="slds-text-heading_small slds-text-color_error">
+                                Invalid products: {failCount}
+                            </p>
+                        </div>
+                        <div>
+                            <p class="slds-text-heading_small ">
+                                Total products: {totalProducts}
+                            </p>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" aria-label="Cancel" onclick={handleCancelProductModal}>
+                        Cancel
+                    </button>
+                    <button class="slds-button slds-button_neutral" aria-label="Preview" onclick={handleExportCSV}>
+                        Download Report
+                    </button>
+                    <template if:true={failedProducts}>
+                        <button class="slds-button slds-button_brand" onclick={handleReUpload}>
+                            Re-upload
+                        </button>
+                    </template>
+                    <template if:true={failedProducts}>
+                        <template if:true={passProducts}>
+
+                            <button class="slds-button slds-button_brand" onclick={handleProceedValid}>
+                                Proceed with Valid Products
+                            </button>
+                        </template>
+                    </template>
+                    <template if:false={failedProducts}>
+                        <button class="slds-button slds-button_brand" onclick={handleProceedValid}>
+                            Confirm
+                        </button>
+                    </template>
+
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation">
+        </div>
+    </template>
+                        
+</template>

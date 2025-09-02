@@ -1,0 +1,221 @@
+
+    <template>
+    <!-- <lightning-card title="Pending Sales Orders" icon-name="standard:orders"> -->
+        
+        <div class="slds-grid slds-gutters slds-p-around_small">
+
+            <!-- Search -->
+            <div class="slds-col">
+                <lightning-input 
+                    type="search" 
+                    label="Search Orders" 
+                    placeholder="Search by Order Number, Sold-to Party Code..."
+                    onchange={handleSearch}>
+                </lightning-input>
+            </div>
+
+            <!-- Status Dropdown -->
+            <div class="slds-col">
+                <lightning-combobox
+                    name="orderStatus"
+                    label="Order Status"
+                    value={selectedStatus}
+                    placeholder="Select Status"
+                    options={statusOptions}
+                    onchange={handleStatusChange}>
+                </lightning-combobox>
+            </div>
+
+        </div>
+
+
+        <!-- Custom DataTable -->
+    <div class="slds-m-around_small">
+
+        <div class="slds-scrollable_y slds-scrollable_x orderTableMainContainer" style="height: 300px; overflow-x: auto; overflow-y: auto;">
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_col-bordered slds-border_left slds-border_right orderTableContainer">
+                <thead>
+                    <tr>
+                        <!-- Checkbox column -->
+                        <th style="width:60px; text-align:center;" scope="col">
+                            <div class="slds-truncate" title="Select">
+                                <lightning-icon icon-name="utility:check" size="xx-small"></lightning-icon>&ensp;Select
+                            </div>
+                        </th>
+    
+                        <th scope="col">
+                            <div class="slds-truncate" title="Sales Order Number">
+                                Sales Order<br/>Number
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Order Created Date">
+                                Order<br/>Created Date
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Channel Partner Name">
+                                Channel Partner<br/>Name
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Sold-to Party Code">
+                                Sold-to Party<br/>Code
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Total Discounted Price">
+                                Total Discounted<br/>Price
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Order Status">
+                                Order<br/>Status
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Block Type">
+                                Block<br/>Type
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Block Reason">
+                                Block<br/>Reason
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Block Remarks">
+                                Block<br/>Remarks
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Block Remarks">
+                                Release<br/>Remarks
+                            </div>
+                        </th>
+                        <th style="width:120px; text-align:center;" scope="col">
+                            <div class="slds-truncate" title="Action">Action</div>
+                        </th>
+                    </tr>
+                </thead>
+    
+                <tbody>
+                    <template for:each={filteredOrders} for:item="order">
+                        <tr key={order.Id}>
+                            <!-- Checkbox -->
+                            <td style="width:60px; text-align:center;">
+                                <lightning-input 
+                                    type="checkbox" 
+                                    data-id={order.Id}
+                                    checked={order.isSelected}
+                                    onchange={handleRowSelect}>
+                                </lightning-input>
+                            </td>
+    
+                            <!-- Sales Order Number -->
+                            <td>
+                                <div class="slds-truncate text-bold">
+                                   <a href="javascript:void(0);" 
+                                    class="slds-text-link" 
+                                    data-id={order.Id}
+                                    onclick={handleNavigateToOrderRecord}>
+                                        {order.OrderNumber}
+                                    </a>
+                                </div>
+                            </td>
+    
+                            <!-- Order Created Date -->
+                            <td>
+                                <div class="slds-truncate">{order.CreatedDate}</div>
+                            </td>
+    
+                            <!-- Channel Partner -->
+                            <td>
+                                <div class="slds-truncate">{order.ChannelPartnerName}</div>
+                            </td>
+    
+                            <!-- Sold-to Party Code -->
+                            <td>
+                                <div class="slds-truncate">{order.SoldToPartyCode}</div>
+                            </td>
+    
+                            <!-- Price -->
+                            <td>
+                                <div class="slds-truncate">{order.TotalDiscountedPrice}</div>
+                            </td>
+    
+                            <!-- Status -->
+                            <td>
+                                <div class="slds-truncate">{order.Status}</div>
+                            </td>
+    
+                            <!-- Block Type -->
+                            <td>
+                                <div class="slds-truncate">{order.DMS_Block_Type__c}</div>
+                            </td>
+    
+                            <!-- Block Reason -->
+                            <td>
+                                <div class="slds-truncate">{order.BlockReason}</div>
+                            </td>
+    
+                            <!-- Block Remarks -->
+                            <td>
+                                <div class="slds-truncate">{order.BlockRemarks}</div>
+                            </td>
+
+                            <td>
+                                <lightning-input 
+                                    type="text"
+                                    data-id={order.Id}
+                                    value={order.ReleaseRemarks}
+                                    onchange={handleReleaseRemarksChange}
+                                    disabled={order.isNotSelected}>
+                                </lightning-input>
+                            </td>
+    
+                            <!-- Action Button -->
+                            <td style="text-align:center;">
+                                <!-- <lightning-button 
+                                    variant="brand-outline" 
+                                    label="View Line Items"
+                                    onclick={handleViewLineItems}>
+                                </lightning-button> -->
+                                <lightning-icon 
+                                  icon-name="utility:preview" 
+                                  alternative-text="Connected" 
+                                  size="small" 
+                                  onclick={handleViewLineItems}
+                                  class="slds-m-left_xx-small custom-icon-blue"
+                                  data-id={order.Id}
+                                  style="cursor: pointer;"
+                                  
+                                ></lightning-icon>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    </div>   
+
+
+        <!-- Confirm Button -->
+        <!-- <div class="slds-grid slds-grid_align-center slds-p-around_medium">
+             <lightning-button 
+                label="Back" 
+                variant="neutral" 
+                class="slds-m-right_small"
+                onclick={handleBack}>
+            </lightning-button>
+
+            <lightning-button 
+                variant="brand" 
+                label="Confirm Block"  
+                onclick={handleConfirm}>
+            </lightning-button>
+        </div> -->
+
+    <!-- </lightning-card> -->
+</template>
+
